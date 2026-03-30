@@ -79,8 +79,23 @@ nav{position:fixed;top:0;width:100%;z-index:300;background:rgba(255,251,245,.9);
 .aj-desc{font-size:.78rem;color:var(--text-2);margin-top:.2rem;line-height:1.5}
 
 /* CASES */
-.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
-.case{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;position:relative}
+.cases-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.2rem;
+  align-items:start;
+}
+
+.case{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform .25s,box-shadow .25s;
+  position:relative;
+  align-self:start;
+}
 .case:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
 .case-color-bar{height:4px}
 .case-body{padding:1.6rem 1.8rem}
