@@ -237,7 +237,6 @@ footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--text-3);bor
 </section>
 
 <!-- CASE STUDIES -->
-<!-- CASE STUDIES -->
 <section class="sec" id="work">
   <div class="container">
     <div class="reveal">
@@ -251,6 +250,7 @@ footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--text-3);bor
         AI, and systems improvements. Click any card to see the full story.
       </p>
     </div>
+
     <div class="cases-grid">
     <!-- 8. SIDE PROJECT -->
     <div class="case reveal" onclick="tc(event, this)">
@@ -646,15 +646,15 @@ function cm() {
 function tc(event, element) {
   event.stopPropagation();
 
-  const isOpen = element.classList.contains("open");
+  const cards = document.querySelectorAll('#work .case');
 
-  document.querySelectorAll(".case.open").forEach((card) => {
-    card.classList.remove("open");
+  cards.forEach((card) => {
+    if (card !== element) {
+      card.classList.remove('open');
+    }
   });
 
-  if (!isOpen) {
-    element.classList.add("open");
-  }
+  element.classList.toggle('open');
 }
 
 function tf(event, element) {
