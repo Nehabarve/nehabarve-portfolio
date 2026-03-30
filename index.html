@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neha Barve — Product Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFBF5;--surface:#FFFFFF;--text:#1C1C1E;--text-2:#636366;--text-3:#AEAEB2;--border:#E8E4DE;--coral:#E8654A;--coral-l:#FFF0EC;--ocean:#2B6CB0;--ocean-l:#EBF2FA;--mint:#2D9D78;--mint-l:#E6F6F0;--gold:#D4912E;--gold-l:#FFF5E5;--plum:#7C5CBA;--plum-l:#F3EEFF;--teal:#1A8A8A;--teal-l:#E2F5F5;--rose:#C94277;--rose-l:#FDEDF3;--slate:#3D5A80;--slate-l:#ECF0F5;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-weight:400;-webkit-font-smoothing:antialiased;font-size:15px}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:300;background:rgba(255,251,245,.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(232,228,222,.6)}
+.nav-inner{max-width:1140px;margin:0 auto;padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-0.02em}
+.nav-logo span{color:var(--coral)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--text-2);font-size:.8rem;font-weight:500;letter-spacing:.03em;transition:color .2s}
+.nav-links a:hover{color:var(--coral)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;width:26px;height:18px;position:relative;z-index:310}
+.hamburger span{display:block;width:100%;height:2px;background:var(--text);position:absolute;left:0;transition:.3s;border-radius:2px}
+.hamburger span:nth-child(1){top:0}.hamburger span:nth-child(2){top:8px}.hamburger span:nth-child(3){top:16px}
+.hamburger.open span:nth-child(1){top:8px;transform:rotate(45deg)}.hamburger.open span:nth-child(2){opacity:0}.hamburger.open span:nth-child(3){top:8px;transform:rotate(-45deg)}
+
+/* HELPERS */
+.container{max-width:1140px;margin:0 auto;padding:0 2rem}
+.sec{padding:6rem 0}
+.sec-eye{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.2em;font-weight:700;margin-bottom:.8rem}
+.sec-eye-dot{width:6px;height:6px;border-radius:50%}
+.sec-h{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;letter-spacing:-0.03em;line-height:1.2;margin-bottom:.5rem}
+.sec-sub{color:var(--text-2);font-size:.95rem;max-width:540px;margin-bottom:2.5rem}
+.sec-h em{font-style:italic;font-weight:400}
+.sec-line{width:40px;height:3px;border-radius:2px;margin-bottom:2.5rem}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:5rem 0 4rem;background:linear-gradient(135deg,var(--bg) 0%,#FFF3E8 40%,#F0EEFF 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-10%;right:-5%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(232,101,74,.08) 0%,transparent 70%)}
+.hero::after{content:'';position:absolute;bottom:-15%;left:10%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(124,92,186,.06) 0%,transparent 70%)}
+.hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:.4rem 1rem;font-size:.75rem;color:var(--text-2);font-weight:500;margin-bottom:1.5rem;opacity:0;animation:fu .7s .15s forwards}
+.hero-eyebrow-dot{width:7px;height:7px;border-radius:50%;background:var(--mint);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,5.5vw,4rem);font-weight:700;letter-spacing:-0.04em;line-height:1.1;margin-bottom:1.2rem;opacity:0;animation:fu .7s .3s forwards}
+.hero-name .highlight{background:linear-gradient(135deg,var(--coral) 0%,var(--plum) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1.05rem;color:var(--text-2);max-width:480px;margin-bottom:1.2rem;opacity:0;animation:fu .7s .45s forwards}
+.hero-domains{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:2rem;opacity:0;animation:fu .7s .55s forwards}
+.hero-domain{padding:.3rem .8rem;border-radius:100px;font-size:.72rem;font-weight:600}
+.hero-ctas{display:flex;gap:.7rem;flex-wrap:wrap;opacity:0;animation:fu .7s .65s forwards}
+.btn-primary{display:inline-flex;align-items:center;gap:.4rem;background:var(--coral);color:#fff;text-decoration:none;padding:.7rem 1.5rem;border-radius:100px;font-size:.82rem;font-weight:600;transition:transform .2s,box-shadow .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,101,74,.3)}
+.btn-secondary{display:inline-flex;align-items:center;gap:.4rem;background:var(--surface);color:var(--text);text-decoration:none;padding:.7rem 1.5rem;border-radius:100px;border:1px solid var(--border);font-size:.82rem;font-weight:600;transition:transform .2s,border-color .2s}
+.btn-secondary:hover{transform:translateY(-2px);border-color:var(--coral)}
+
+/* Hero photo */
+.hero-right{display:flex;flex-direction:column;align-items:center;opacity:0;animation:fu .8s .5s forwards}
+.hero-photo-wrap{position:relative;margin-bottom:1.5rem}
+.hero-photo{width:260px;height:260px;border-radius:50%;object-fit:cover;object-position:center top;border:4px solid var(--surface);box-shadow:0 12px 40px rgba(0,0,0,.1),0 0 0 1px var(--border);position:relative;z-index:2}
+.hero-photo-ring{position:absolute;top:-8px;left:-8px;right:-8px;bottom:-8px;border-radius:50%;background:conic-gradient(var(--coral),var(--gold),var(--mint),var(--ocean),var(--plum),var(--coral));opacity:.3;z-index:1;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-caps{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;width:100%;max-width:320px}
+.hero-cap{display:flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.55rem .85rem;font-size:.76rem;font-weight:500;color:var(--text-2);transition:transform .2s}
+.hero-cap:hover{transform:translateY(-2px)}
+.hero-cap-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* ABOUT */
+#about{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+.about-text p{color:var(--text-2);margin-bottom:1rem;font-size:.95rem}
+.about-text strong{color:var(--text);font-weight:600}
+.about-journey{display:flex;flex-direction:column;gap:.8rem}
+.aj-card{display:flex;gap:1rem;align-items:flex-start;padding:1rem 1.2rem;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);transition:transform .2s}
+.aj-card:hover{transform:translateX(4px)}
+.aj-dot{width:10px;height:10px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.aj-info{flex:1}
+.aj-role{font-weight:600;font-size:.88rem}
+.aj-company{font-size:.78rem;color:var(--text-3)}
+.aj-desc{font-size:.78rem;color:var(--text-2);margin-top:.2rem;line-height:1.5}
+
+/* CASES */
+.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.case{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;position:relative}
+.case:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+.case-color-bar{height:4px}
+.case-body{padding:1.6rem 1.8rem}
+.case-badge{display:inline-flex;padding:.2rem .65rem;border-radius:100px;font-size:.62rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.7rem}
+.case-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:.2rem;letter-spacing:-0.01em;line-height:1.3}
+.case-company{font-size:.75rem;color:var(--text-3);font-weight:500;margin-bottom:.5rem}
+.case-desc{color:var(--text-2);font-size:.85rem;line-height:1.6;margin-bottom:.8rem}
+.case-impact{display:flex;gap:1rem;padding-top:.8rem;border-top:1px solid var(--border)}
+.case-impact-val{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700}
+.case-impact-label{font-size:.62rem;color:var(--text-3);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.case-insight{margin-top:.8rem;padding:.7rem .9rem;border-radius:var(--radius-sm);background:var(--bg);font-size:.8rem;color:var(--text-2);font-style:italic;line-height:1.5}
+.case-expand{max-height:0;overflow:hidden;transition:max-height .5s,opacity .3s;opacity:0}
+.case.open .case-expand{max-height:900px;opacity:1}
+.case-expand-inner{padding:0 1.8rem 1.8rem}
+.case-expand-inner>div:first-child{border-top:1px solid var(--border);padding-top:1.2rem}
+.cex-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;font-weight:700;margin-bottom:.3rem;margin-top:.8rem}
+.cex-label:first-child{margin-top:0}
+.cex-text{font-size:.84rem;color:var(--text-2);line-height:1.6}
+.cex-list{list-style:none;padding:0}
+.cex-list li{font-size:.84rem;color:var(--text-2);padding-left:1rem;position:relative;margin-bottom:.25rem;line-height:1.55}
+.cex-list li::before{content:'';position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--coral)}
+.case-hint{position:absolute;bottom:1rem;right:1.5rem;font-size:.65rem;color:var(--text-3);font-weight:500;transition:color .2s}
+.case:hover .case-hint{color:var(--coral)}
+.case.open .case-hint{display:none}
+
+/* APPROACH */
+#approach{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.fw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.fw{padding:1.5rem;border-radius:var(--radius);cursor:pointer;transition:transform .2s,box-shadow .2s;border:1px solid var(--border);background:var(--bg);position:relative}
+.fw:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.04)}
+.fw-color-dot{width:8px;height:8px;border-radius:50%;margin-bottom:.7rem}
+.fw-name{font-weight:700;font-size:.9rem;margin-bottom:.3rem}
+.fw-desc{font-size:.8rem;color:var(--text-2);line-height:1.55}
+.fw-example{max-height:0;overflow:hidden;transition:max-height .4s,opacity .3s;opacity:0}
+.fw.open .fw-example{max-height:200px;opacity:1}
+.fw-example-inner{padding-top:.7rem;margin-top:.7rem;border-top:1px dashed var(--border);font-size:.78rem;color:var(--text-2);line-height:1.6;font-style:italic}
+
+/* TOOLS */
+.tools-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.tool-cat h3{font-size:.8rem;font-weight:700;margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+.tool-cat h3 .tool-dot{width:6px;height:6px;border-radius:50%}
+.tool-pills{display:flex;flex-wrap:wrap;gap:.35rem}
+.tool-pill{padding:.3rem .75rem;border-radius:100px;font-size:.75rem;font-weight:500;color:var(--text-2);background:var(--surface);border:1px solid var(--border);transition:all .2s}
+.tool-pill:hover{border-color:var(--coral);color:var(--coral)}
+
+/* CONTACT */
+#contact{text-align:center;padding-bottom:8rem}
+.contact-desc{color:var(--text-2);font-size:1rem;max-width:460px;margin:0 auto 2rem}
+.contact-email{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3vw,1.6rem);color:var(--text);text-decoration:none;border-bottom:2.5px solid var(--coral);padding-bottom:3px;transition:color .2s}
+.contact-email:hover{color:var(--coral)}
+.contact-links{display:flex;justify-content:center;gap:.8rem;margin-top:1.5rem}
+.contact-link{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.2rem;border-radius:100px;border:1px solid var(--border);text-decoration:none;font-size:.8rem;font-weight:600;color:var(--text-2);transition:all .2s}
+.contact-link:hover{border-color:var(--coral);color:var(--coral);transform:translateY(-2px)}
+
+footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--text-3);border-top:1px solid var(--border)}
+
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){.fw-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;inset:0;background:var(--bg);align-items:center;justify-content:center;gap:1.5rem;z-index:300}
+  .nav-links.open a{font-size:1.1rem}
+  .hamburger{display:block}
+  .hero-grid{grid-template-columns:1fr;gap:2.5rem}
+  .hero-right{order:-1}
+  .hero-photo{width:200px;height:200px}
+  .hero-caps{max-width:280px}
+  .about-grid{grid-template-columns:1fr;gap:2rem}
+  .cases-grid{grid-template-columns:1fr}
+  .fw-grid{grid-template-columns:1fr}
+  .tools-row{grid-template-columns:1fr}
+  .sec{padding:4rem 0}
+  .container{padding:0 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+  <a href="#" class="nav-logo">Neha<span>.</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" onclick="cm()">About</a></li>
+    <li><a href="#work" onclick="cm()">Work</a></li>
+    <li><a href="#approach" onclick="cm()">Approach</a></li>
+    <li><a href="#tools" onclick="cm()">Tools</a></li>
+    <li><a href="#contact" onclick="cm()">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hb" onclick="tm()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+<div class="container">
+<div class="hero-grid">
+  <div>
+    <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span> Open to opportunities</div>
+    <h1 class="hero-name">Hi, I'm Neha.<br>I make <span class="highlight">complex systems</span><br>work simply.</h1>
+    <p class="hero-desc">Product Manager with 5+ years shipping enterprise platforms, compliance workflows, and AI-driven products across pharma, industrial tech, and regulated environments.</p>
+    <div class="hero-domains">
+      <span class="hero-domain" style="background:var(--coral-l);color:var(--coral)">Pharma / Life Sciences</span>
+      <span class="hero-domain" style="background:var(--ocean-l);color:var(--ocean)">Industrial SaaS</span>
+      <span class="hero-domain" style="background:var(--plum-l);color:var(--plum)">RegTech</span>
+      <span class="hero-domain" style="background:var(--gold-l);color:var(--gold)">HR Tech</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">View my work <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="#contact" class="btn-secondary">Get in touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-ring"></div>
+      <img src="data:image/jpeg;base64,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" alt="Neha Barve" class="hero-photo">
+    </div>
+    <div class="hero-caps">
+      <div class="hero-cap"><span class="hero-cap-dot" style="background:var(--coral)"></span> Workflow Systems</div>
+      <div class="hero-cap"><span class="hero-cap-dot" style="background:var(--ocean)"></span> Compliance</div>
+      <div class="hero-cap"><span class="hero-cap-dot" style="background:var(--mint)"></span> Agile Delivery</div>
+      <div class="hero-cap"><span class="hero-cap-dot" style="background:var(--plum)"></span> AI in Products</div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+<div class="container">
+  <div class="reveal">
+    <p class="sec-eye"><span class="sec-eye-dot" style="background:var(--coral)"></span> About</p>
+    <h2 class="sec-h">The <em>short version</em></h2>
+    <div class="sec-line" style="background:var(--coral)"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I've spent my career working on <strong>enterprise platforms in regulated environments</strong> where workflows, compliance, and data accuracy are critical.</p>
+      <p>At <strong>Takeda</strong>, I built the grants & donations platform end-to-end — mapping fragmented processes, integrating SAP payments, and standardizing transparency reporting across multiple countries. At <strong>Honeywell</strong>, I introduced AI summarization, built configuration governance tools, and created cycle time dashboards that helped teams find bottlenecks for the first time.</p>
+      <p>At <strong>EduCred</strong>, I built a license renewal product from scratch for professionals like CPAs. At <strong>Bridgestone</strong>, I brought structure to training management in an environment without a centralized HR system.</p>
+      <p>My focus: <strong>simplify workflows, improve visibility, and build products that teams actually use.</strong></p>
+    </div>
+    <div class="about-journey reveal">
+      <div class="aj-card"><div class="aj-dot" style="background:var(--teal)"></div><div class="aj-info"><div class="aj-role">Product Manager</div><div class="aj-company">Honeywell · Enterprise SaaS</div><div class="aj-desc">AI summarization, config migration, cycle time metrics</div></div></div>
+      <div class="aj-card"><div class="aj-dot" style="background:var(--ocean)"></div><div class="aj-info"><div class="aj-role">Product Manager</div><div class="aj-company">Takeda · Pharma / Life Sciences</div><div class="aj-desc">Grants platform, transparency reporting, payment reliability</div></div></div>
+      <div class="aj-card"><div class="aj-dot" style="background:var(--plum)"></div><div class="aj-info"><div class="aj-role">Product Manager</div><div class="aj-company">EduCred · RegTech</div><div class="aj-desc">License renewal platform, 0→1 build</div></div></div>
+      <div class="aj-card"><div class="aj-dot" style="background:var(--gold)"></div><div class="aj-info"><div class="aj-role">Business Analyst / PM</div><div class="aj-company">Bridgestone · Manufacturing / HR Tech</div><div class="aj-desc">Training management, HR workflow improvements</div></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="sec" id="work">
+<div class="container">
+  <div class="reveal">
+    <p class="sec-eye"><span class="sec-eye-dot" style="background:var(--ocean)"></span> Case Studies</p>
+    <h2 class="sec-h">Real projects, <em>real impact</em></h2>
+    <p class="sec-sub">Click any card to see the full story.</p>
+  </div>
+  <div class="cases-grid">
+
+    <div class="case reveal" onclick="tc(this)">
+      <div class="case-color-bar" style="background:linear-gradient(90deg,var(--mint),var(--teal))"></div>
+      <div class="case-body">
+        <span class="case-badge" style="background:var(--mint-l);color:var(--mint)">Workflow + SAP</span>
+        <h3 class="case-title">Grants & Donations Workflow Platform</h3>
+        <p class="case-company">Takeda</p>
+        <p class="case-desc">Built a centralized system managing grant, donation, and sponsorship requests — from fragmented channels to structured workflow with SAP payment integration.</p>
+        <div class="case-impact">
+          <div><div class="case-impact-val" style="color:var(--mint)">End-to-end</div><div class="case-impact-label">Workflow Automation</div></div>
+          <div><div class="case-impact-val" style="color:var(--mint)">3 teams</div><div class="case-impact-label">Aligned</div></div>
+          <div><div class="case-impact-val" style="color:var(--mint)">SAP</div><div class="case-impact-label">Integrated</div></div>
+        </div>
+        <span class="case-hint">Click to expand</span>
+      </div>
+      <div class="case-expand"><div class="case-expand-inner"><div>
+        <div class="cex-label" style="color:var(--coral)">Problem</div>
+        <ul class="cex-list"><li>Requests came through emails, calls, and forms — no standardized intake</li><li>Unclear ownership at each workflow stage</li><li>Payment processing disconnected from approvals</li><li>No visibility into request status</li></ul>
+        <div class="cex-label" style="color:var(--mint)">What I Did</div>
+        <ul class="cex-list"><li>Mapped end-to-end flow from submission to payment — uncovering handoff gaps between medical, compliance, and finance</li><li>Defined structured approval stages with clear ownership</li><li>Identified and drove SAP integration for payment automation</li><li>Enabled real-time dashboards for status tracking</li></ul>
+        <div class="cex-label" style="color:var(--ocean)">Outcome</div>
+        <p class="cex-text">Centralized the workflow. Processing delays reduced from weeks to days. Teams gained visibility into every request's status for the first time.</p>
+        <div class="case-insight">"Workflow clarity solves most operational inefficiencies."</div>
+      </div></div></div>
+    </div>
+
+    <div class="case reveal" onclick="tc(this)">
+      <div class="case-color-bar" style="background:linear-gradient(90deg,var(--plum),var(--rose))"></div>
+      <div class="case-body">
+        <span class="case-badge" style="background:var(--plum-l);color:var(--plum)">AI · Side Project</span>
+        <h3 class="case-title">AI-Based Stock Scanner Using Natural Language</h3>
+        <p class="case-company">Side Project</p>
+        <p class="case-desc">Built a tool that translates natural language queries into stock screening logic — simplifying how users interact with market data.</p>
+        <div class="case-impact">
+          <div><div class="case-impact-val" style="color:var(--plum)">NLP</div><div class="case-impact-label">Query Engine</div></div>
+          <div><div class="case-impact-val" style="color:var(--plum)">0→1</div><div class="case-impact-label">Build</div></div>
+        </div>
+        <span class="case-hint">Click to expand</span>
+      </div>
+      <div class="case-expand"><div class="case-expand-inner"><div>
+        <div class="cex-label" style="color:var(--coral)">Problem</div>
+        <p class="cex-text">Retail investors struggle with complex filter syntax when screening stocks. Existing tools require specialized knowledge.</p>
+        <div class="cex-label" style="color:var(--plum)">What I Did</div>
+        <ul class="cex-list"><li>Defined the product concept and core user flow</li><li>Worked with a small team to translate natural language inputs into structured screening logic</li><li>Iterated on query interpretation based on real user testing</li></ul>
+        <div class="cex-label" style="color:var(--ocean)">Outcome</div>
+        <p class="cex-text">Working prototype that lets users type queries like "show me tech stocks under $50 with growing revenue" and get filtered results.</p>
+        <div class="case-insight">"Side projects show initiative and learning beyond the day job."</div>
+      </div></div></div>
+    </div>
+
+    <div class="case reveal" onclick="tc(this)">
+      <div class="case-color-bar" style="background:linear-gradient(90deg,var(--ocean),var(--slate))"></div>
+      <div class="case-body">
+        <span class="case-badge" style="background:var(--ocean-l);color:var(--ocean)">Compliance · Global</span>
+        <h3 class="case-title">Global Transparency Reporting</h3>
+        <p class="case-company">Takeda</p>
+        <p class="case-desc">Standardized HCP/HCO expense reporting across multiple countries — each with different formats, languages, and regulatory rules.</p>
+        <div class="case-impact">
+          <div><div class="case-impact-val" style="color:var(--ocean)">Multi-country</div><div class="case-impact-label">Standardized</div></div>
+          <div><div class="case-impact-val" style="color:var(--ocean)">~60%</div><div class="case-impact-label">Less Manual Work</div></div>
+        </div>
+        <span class="case-hint">Click to expand</span>
+      </div>
+      <div class="case-expand"><div class="case-expand-inner"><div>
+        <div class="cex-label" style="color:var(--coral)">Problem</div>
+        <ul class="cex-list"><li>Each country had unique report structures and aggregation rules</li><li>Manual validation consumed significant team hours</li><li>Adding new countries required near-rebuilds</li></ul>
+        <div class="cex-label" style="color:var(--ocean)">What I Did</div>
+        <ul class="cex-list"><li>Analyzed country-specific formats and defined a common data structure</li><li>Validated outputs with vendor using real report samples</li><li>Bridged communication between transparency team and technical vendor</li></ul>
+        <div class="cex-label" style="color:var(--mint)">Outcome</div>
+        <p class="cex-text">Reduced manual validation effort significantly. New countries became configuration tasks, not custom builds.</p>
+        <div class="case-insight">"Standardize the data, not the output format."</div>
+      </div></div></div>
+    </div>
+
+    <div class="case reveal" onclick="tc(this)">
+      <div class="case-color-bar" style="background:linear-gradient(90deg,var(--teal),var(--mint))"></div>
+      <div class="case-body">
+        <span class="case-badge" style="background:var(--teal-l);color:var(--teal)">AI · Enterprise</span>
+        <h3 class="case-title">AI-Assisted Text Summarization</h3>
+        <p class="case-company">Honeywell</p>
+        <p class="case-desc">Introduced AI summarization for document-heavy workflows — positioned as assistive, iterated based on feedback to build user trust.</p>
+        <div class="case-impact">
+          <div><div class="case-impact-val" style="color:var(--teal)">~40%</div><div class="case-impact-label">Time Saved</div></div>
+          <div><div class="case-impact-val" style="color:var(--teal)">Trust-first</div><div class="case-impact-label">Approach</div></div>
+        </div>
+        <span class="case-hint">Click to expand</span>
+      </div>
+      <div class="case-expand"><div class="case-expand-inner"><div>
+        <div class="cex-label" style="color:var(--coral)">Problem</div>
+        <ul class="cex-list"><li>Users spent hours manually reviewing long documents</li><li>Early AI attempts met with skepticism</li></ul>
+        <div class="cex-label" style="color:var(--teal)">What I Did</div>
+        <ul class="cex-list"><li>Defined the use case and launched a basic version</li><li>Positioned AI as assistive — users stayed in control</li><li>Iterated based on real user feedback each sprint</li></ul>
+        <div class="cex-label" style="color:var(--mint)">Outcome</div>
+        <p class="cex-text">Adoption grew as trust built. "Assistive, not autonomous" became the default AI approach.</p>
+        <div class="case-insight">"AI adoption depends on trust, not just capability."</div>
+      </div></div></div>
+    </div>
+
+    <div class="case reveal" onclick="tc(this)">
+      <div class="case-color-bar" style="background:linear-gradient(90deg,var(--coral),var(--gold))"></div>
+      <div class="case-body">
+        <span class="case-badge" style="background:var(--coral-l);color:var(--coral)">Payments</span>
+        <h3 class="case-title">Payment Failure Resolution</h3>
+        <p class="case-company">Takeda</p>
+        <p class="case-desc">Discovered invisible payment failures and built tracking, daily reports, and a resolution workflow — turning a blind spot into reliable operations.</p>
+        <div class="case-impact">
+          <div><div class="case-impact-val" style="color:var(--coral)">Days → Hours</div><div class="case-impact-label">Resolution Time</div></div>
+          <div><div class="case-impact-val" style="color:var(--coral)">Zero</div><div class="case-impact-label">Blind Spots</div></div>
+        </div>
+        <span class="case-hint">Click to expand</span>
+      </div>
+      <div class="case-expand"><div class="case-expand-inner"><div>
+        <div class="cex-label" style="color:var(--coral)">Problem</div>
+        <ul class="cex-list"><li>Payments failing before SAP with no visibility</li><li>Issues only surfaced when payments were delayed</li></ul>
+        <div class="cex-label" style="color:var(--mint)">What I Did</div>
+        <ul class="cex-list"><li>Investigated the pipeline and identified the gap</li><li>Introduced daily failure reports with reasons</li><li>Defined resolution workflow with clear ownership</li></ul>
+        <div class="cex-label" style="color:var(--ocean)">Outcome</div>
+        <p class="cex-text">Resolution time dropped from days to hours. Payment process became reliable and predictable.</p>
+        <div class="case-insight">"Failures are manageable when visibility exists."</div>
+      </div></div></div>
+    </div>
+
+    <div class="case reveal" onclick="tc(this)">
+      <div class="case-color-bar" style="background:linear-gradient(90deg,var(--plum),var(--ocean))"></div>
+      <div class="case-body">
+        <span class="case-badge" style="background:var(--plum-l);color:var(--plum)">RegTech · 0→1</span>
+        <h3 class="case-title">License Renewal Platform</h3>
+        <p class="case-company">EduCred</p>
+        <p class="case-desc">Built a product from scratch for professionals like CPAs — credit tracking, deadline reminders, and compliance dashboards.</p>
+        <div class="case-impact">
+          <div><div class="case-impact-val" style="color:var(--plum)">0→1</div><div class="case-impact-label">Built from Scratch</div></div>
+          <div><div class="case-impact-val" style="color:var(--plum)">Multi-state</div><div class="case-impact-label">Compliance</div></div>
+        </div>
+        <span class="case-hint">Click to expand</span>
+      </div>
+      <div class="case-expand"><div class="case-expand-inner"><div>
+        <div class="cex-label" style="color:var(--coral)">Problem</div>
+        <ul class="cex-list"><li>No centralized tracking for license renewals</li><li>High risk of missed deadlines</li><li>Different rules across professions and regions</li></ul>
+        <div class="cex-label" style="color:var(--plum)">What I Did</div>
+        <ul class="cex-list"><li>Defined product vision and user needs through research</li><li>Designed credit tracking, renewal reminders, compliance dashboards</li><li>Structured data logic for eligibility validation</li></ul>
+        <div class="cex-label" style="color:var(--mint)">Outcome</div>
+        <p class="cex-text">Centralized license tracking. Reduced risk of missed renewals. Simplified a complex manual process.</p>
+        <div class="case-insight">"0→1 requires deep understanding of pain points before features."</div>
+      </div></div></div>
+    </div>
+
+    <div class="case reveal" onclick="tc(this)">
+      <div class="case-color-bar" style="background:linear-gradient(90deg,var(--slate),var(--teal))"></div>
+      <div class="case-body">
+        <span class="case-badge" style="background:var(--slate-l);color:var(--slate)">DevOps · Governance</span>
+        <h3 class="case-title">Configuration Migration Tool</h3>
+        <p class="case-company">Honeywell</p>
+        <p class="case-desc">Built governance into the config promotion workflow — structured tracking so teams could see what was moving to production.</p>
+        <div class="case-impact">
+          <div><div class="case-impact-val" style="color:var(--slate)">Zero-friction</div><div class="case-impact-label">Governance</div></div>
+          <div><div class="case-impact-val" style="color:var(--slate)">Reliable</div><div class="case-impact-label">Releases</div></div>
+        </div>
+        <span class="case-hint">Click to expand</span>
+      </div>
+      <div class="case-expand"><div class="case-expand-inner"><div>
+        <div class="cex-label" style="color:var(--coral)">Problem</div>
+        <ul class="cex-list"><li>No tracking of config changes moving to production</li><li>Risk of inconsistencies about what was live</li></ul>
+        <div class="cex-label" style="color:var(--slate)">What I Did</div>
+        <ul class="cex-list"><li>Defined structured migration workflow with stages</li><li>Introduced tracking as natural part of the flow</li><li>Made governance embedded, not separate</li></ul>
+        <div class="cex-label" style="color:var(--mint)">Outcome</div>
+        <p class="cex-text">Better control, reduced risk, reliable releases. Teams followed the process because it added no friction.</p>
+        <div class="case-insight">"Governance should be built in, not bolted on."</div>
+      </div></div></div>
+    </div>
+
+    <div class="case reveal" onclick="tc(this)">
+      <div class="case-color-bar" style="background:linear-gradient(90deg,var(--gold),var(--coral))"></div>
+      <div class="case-body">
+        <span class="case-badge" style="background:var(--gold-l);color:var(--gold)">HR Tech</span>
+        <h3 class="case-title">Training Management System</h3>
+        <p class="case-company">Bridgestone</p>
+        <p class="case-desc">Brought structure to training management without a centralized HRIS — mapping workflows, identifying gaps, introducing tracking.</p>
+        <div class="case-impact">
+          <div><div class="case-impact-val" style="color:var(--gold)">Structured</div><div class="case-impact-label">From Manual</div></div>
+          <div><div class="case-impact-val" style="color:var(--gold)">Visible</div><div class="case-impact-label">Progress</div></div>
+        </div>
+        <span class="case-hint">Click to expand</span>
+      </div>
+      <div class="case-expand"><div class="case-expand-inner"><div>
+        <div class="cex-label" style="color:var(--coral)">Problem</div>
+        <ul class="cex-list"><li>No centralized training tracking</li><li>Manual coordination, limited visibility</li></ul>
+        <div class="cex-label" style="color:var(--gold)">What I Did</div>
+        <ul class="cex-list"><li>Mapped existing HR and training workflows</li><li>Identified gaps in tracking and ownership</li><li>Designed structured tracking system</li></ul>
+        <div class="cex-label" style="color:var(--mint)">Outcome</div>
+        <p class="cex-text">Improved visibility into training progress. Better coordination. More efficient process.</p>
+        <div class="case-insight">"Strong systems start with clear process understanding."</div>
+      </div></div></div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- APPROACH -->
+<section class="sec" id="approach">
+<div class="container">
+  <div class="reveal">
+    <p class="sec-eye"><span class="sec-eye-dot" style="background:var(--plum)"></span> How I Think</p>
+    <h2 class="sec-h">My <em>approach</em></h2>
+    <p class="sec-sub">Mental models shaped by real experience. Click to see examples.</p>
+  </div>
+  <div class="fw-grid">
+    <div class="fw reveal" onclick="tf(this)"><div class="fw-color-dot" style="background:var(--coral)"></div><div class="fw-name">Prioritization</div><div class="fw-desc">Impact over urgency. The most visible feature isn't always the most valuable.</div><div class="fw-example"><div class="fw-example-inner">At Takeda, I chose SAP integration over UI polish — it unlocked end-to-end automation and delivered significantly more business value.</div></div></div>
+    <div class="fw reveal" onclick="tf(this)"><div class="fw-color-dot" style="background:var(--ocean)"></div><div class="fw-name">Collaboration</div><div class="fw-desc">Good product work comes from shared understanding across teams.</div><div class="fw-example"><div class="fw-example-inner">On transparency reporting, I used real report samples to align vendor and business teams — concrete examples beat abstract requirements.</div></div></div>
+    <div class="fw reveal" onclick="tf(this)"><div class="fw-color-dot" style="background:var(--mint)"></div><div class="fw-name">Conflict Resolution</div><div class="fw-desc">Most conflicts are trade-offs that need structure, not a winner.</div><div class="fw-example"><div class="fw-example-inner">Business wanted speed, compliance wanted control. I designed tiered workflows based on risk — both sides got what mattered most.</div></div></div>
+    <div class="fw reveal" onclick="tf(this)"><div class="fw-color-dot" style="background:var(--gold)"></div><div class="fw-name">Visibility First</div><div class="fw-desc">You can't improve what you can't see. Measure before you optimize.</div><div class="fw-example"><div class="fw-example-inner">At Honeywell, teams knew things were "slow" but had no data. Cycle time dashboards gave them the first real view of bottlenecks.</div></div></div>
+    <div class="fw reveal" onclick="tf(this)"><div class="fw-color-dot" style="background:var(--plum)"></div><div class="fw-name">Stakeholder Alignment</div><div class="fw-desc">Ownership clarity drives coordination. Align early, reduce rework.</div><div class="fw-example"><div class="fw-example-inner">At Takeda, I ran working sessions with medical, compliance, and finance — making handoffs and ownership explicit for the first time.</div></div></div>
+    <div class="fw reveal" onclick="tf(this)"><div class="fw-color-dot" style="background:var(--teal)"></div><div class="fw-name">Iterative Delivery</div><div class="fw-desc">Start small, ship, learn. Action creates clarity that planning never will.</div><div class="fw-example"><div class="fw-example-inner">AI summarization at Honeywell started as a basic MVP. Each sprint brought real feedback. Clarity came from usage, not documents.</div></div></div>
+  </div>
+</div>
+</section>
+
+<!-- TOOLS -->
+<section class="sec" id="tools">
+<div class="container">
+  <div class="reveal">
+    <p class="sec-eye"><span class="sec-eye-dot" style="background:var(--mint)"></span> Toolkit</p>
+    <h2 class="sec-h">Tools I <em>work with</em></h2>
+    <div class="sec-line" style="background:var(--mint)"></div>
+  </div>
+  <div class="tools-row reveal">
+    <div class="tool-cat"><h3><span class="tool-dot" style="background:var(--coral)"></span> Product & Discovery</h3><div class="tool-pills"><span class="tool-pill">Jira</span><span class="tool-pill">Confluence</span><span class="tool-pill">Notion</span><span class="tool-pill">Miro</span><span class="tool-pill">Azure DevOps</span><span class="tool-pill">User Interviews</span></div></div>
+    <div class="tool-cat"><h3><span class="tool-dot" style="background:var(--ocean)"></span> Analytics & Data</h3><div class="tool-pills"><span class="tool-pill">SQL</span><span class="tool-pill">SAP</span><span class="tool-pill">Excel</span><span class="tool-pill">Dashboards</span><span class="tool-pill">Cycle Time Metrics</span><span class="tool-pill">Process Mapping</span></div></div>
+    <div class="tool-cat"><h3><span class="tool-dot" style="background:var(--mint)"></span> Collaboration</h3><div class="tool-pills"><span class="tool-pill">Figma</span><span class="tool-pill">Slack</span><span class="tool-pill">Agile / Scrum</span><span class="tool-pill">Vendor Management</span><span class="tool-pill">Stakeholder Workshops</span></div></div>
+  </div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="contact">
+<div class="container">
+  <div class="reveal">
+    <p class="sec-eye"><span class="sec-eye-dot" style="background:var(--gold)"></span> Get in Touch</p>
+    <h2 class="sec-h">Let's <em>connect</em></h2>
+    <div class="sec-line" style="background:var(--gold);margin:0 auto 2rem"></div>
+    <p class="contact-desc">I'm open to product management and enterprise platform opportunities. Always happy to talk about complex systems, compliance workflows, or your next product challenge.</p>
+    <a href="mailto:BarveNeha05@gmail.com" class="contact-email">BarveNeha05@gmail.com</a>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/neha-barve/" class="contact-link" target="_blank">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:BarveNeha05@gmail.com" class="contact-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer>Neha Barve · Built with care</footer>
+
+<script>
+function tm(){document.getElementById('hb').classList.toggle('open');document.getElementById('navLinks').classList.toggle('open')}
+function cm(){document.getElementById('hb').classList.remove('open');document.getElementById('navLinks').classList.remove('open')}
+function tc(e){const o=e.classList.contains('open');document.querySelectorAll('.case').forEach(c=>c.classList.remove('open'));if(!o)e.classList.add('open')}
+function tf(e){const o=e.classList.contains('open');document.querySelectorAll('.fw').forEach(c=>c.classList.remove('open'));if(!o)e.classList.add('open')}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const p=e.target.parentElement;if(p){const s=Array.from(p.children).filter(c=>c.classList.contains('reveal'));e.target.style.transitionDelay=`${s.indexOf(e.target)*.07}s`}e.target.classList.add('vis')}})},{threshold:.04,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
